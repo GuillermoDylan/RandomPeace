@@ -27,12 +27,11 @@ class RandomPlacer {
         var array = this.aspectRatioWidth(60);
         var finalWidth = array[0];
         var finalHeight = array[1];
-        var array = this.aspectRatioHeight(70, this.height);
+        var array = this.aspectRatioHeight(70,finalWidth, this.height);
         var finalWidth = array[0];
         var finalHeight = array[1];
-        this.img.resize(finalWidth, finalHeight);
         imageMode(CENTER);
-        image(this.img, this.x, this.y);
+        image(this.img, this.x, this.y, finalWidth, finalHeight);
         console.log(finalWidth);
         console.log(finalHeight);
     }
@@ -50,9 +49,9 @@ class RandomPlacer {
         return [finalHeight, finalWidth];
     }
       
-    aspectRatioHeight(finalHeight, displayHeight){
+    aspectRatioHeight(finalHeight, finalWidth, displayHeight){
         // Después de aplicar el escalado de anchura, commprobamos la altura
-        var finalWidth = 0;
+        var finalWidth = finalWidth;
         if (finalHeight > displayHeight) {
             // La escalamos si hace falta
             finalHeight = displayHeight;
