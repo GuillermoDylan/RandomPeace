@@ -1,19 +1,26 @@
+/**
+ * Recive una imagen y la coloca en una posición aleatoria de la pantalla
+ */
 class RandomPlacer {
     
-    constructor(maxPlacements) {
+    /**
+     * Importante: la imagen ya debe estar cargada
+     * @param {Image} image 
+     */
+    constructor(image) {
         this.x = 0;
         this.y = 0;
-        this.list = [maxPlacements];
-        /** 
-        for(i = 0; i < maxPlacements; i++) {
-            this.list[i] =  0; // TODO añadir aquí los "soldados"
-        }
-        **/
-        this.img = loadImage("img/flower_thrower.svg");
+        this.img = image;
         this.width = 0;
         this.height = 0;
     }
 
+    /**
+     * Genera la posición aleatoria para la imagen
+     * Importante ejecutar este método antes que draw()
+     * @param {number} width 
+     * @param {number} height 
+     */
     place(width, height) {
         let x = Math.floor(Math.random() * ((width - 50) - 100)) + 100;
         let y = Math.floor(Math.random() * ((height - 50) - 100)) + 100;
@@ -23,6 +30,10 @@ class RandomPlacer {
         this.height = height;
     }
 
+    /**
+     * Dibuja la imagen en la posición aleatoria
+     * Importante ejecutar este método después de place()
+     */
     draw() {
         var array = this.aspectRatioWidth(60);
         var finalWidth = array[0];
@@ -36,6 +47,11 @@ class RandomPlacer {
         console.log(finalHeight);
     }
 
+    /**
+     * Mantiene la relación de aspecto de la imagen en función de la anchura
+     * @param {number} displayWidth 
+     * @returns 
+     */
     aspectRatioWidth(displayWidth){
         // Primero comprobar si hay que escalar la anchura
         var finalWidth = this.img.width;
@@ -49,6 +65,13 @@ class RandomPlacer {
         return [finalHeight, finalWidth];
     }
       
+    /**
+     * Mantiene la relación de aspecto de la imagen en función de la altura
+     * @param {number} finalHeight 
+     * @param {number} finalWidth 
+     * @param {number} displayHeight 
+     * @returns 
+     */
     aspectRatioHeight(finalHeight, finalWidth, displayHeight){
         // Después de aplicar el escalado de anchura, commprobamos la altura
         var finalWidth = finalWidth;

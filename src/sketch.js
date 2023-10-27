@@ -8,7 +8,7 @@ function preload(){
 
 function setup() {
   createCanvas(screen.width, screen.height);
-  rp = new RandomPlacer(10)
+  rp = new RandomPlacer(loadImage("img/flower_thrower.svg"))
 }
 
 function draw() {
