@@ -41,10 +41,13 @@ class RandomPlacer {
         var array = this.aspectRatioHeight(70,finalWidth, this.height);
         var finalWidth = array[0];
         var finalHeight = array[1];
-        imageMode(CENTER);
-        image(this.img, this.x, this.y, finalWidth, finalHeight);
-        console.log(finalWidth);
-        console.log(finalHeight);
+        push();
+        // Scale -1, 1 means reverse the x axis, keep y the same.
+        scale(-1, 1);
+        // Because the x-axis is reversed, we need to draw at different x position.
+        //image(this.img, -this.x, this.y, finalWidth, finalHeight);
+        pop();
+        return [-this.x, this.y, finalWidth, finalHeight];
     }
 
     /**
