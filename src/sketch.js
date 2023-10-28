@@ -1,14 +1,16 @@
 var mySvg; 
 var placed = false;
 var rp;
+var imageFactory;
 
 function preload(){
-	mySvg = loadImage("img/flower_thrower.svg");
+  imageFactory = new ImageFactory();
+	mySvg = imageFactory.getFlowerThrower();
 }
 
 function setup() {
   createCanvas(screen.width, screen.height);
-  rp = new RandomPlacer(loadImage("img/flower_thrower.svg"))
+  rp = new RandomPlacer(imageFactory.getFlowerThrower())
 }
 
 function draw() {
