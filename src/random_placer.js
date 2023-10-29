@@ -7,12 +7,13 @@ class RandomPlacer {
      * Importante: la imagen ya debe estar cargada
      * @param {Image} image 
      */
-    constructor(image) {
+    constructor(image, maxPlaced = 50) {
         this.x = 0;
         this.y = 0;
         this.img = image;
         this.width = 0;
         this.height = 0;
+        this.list = [];
     }
 
     /**
@@ -21,33 +22,31 @@ class RandomPlacer {
      * @param {number} width 
      * @param {number} height 
      */
-    place(width, height) {
-        let x = Math.floor(Math.random() * ((width - 50) - 100)) + 100;
-        let y = Math.floor(Math.random() * ((height - 50) - 100)) + 100;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+    place(width, height, i) {
+        if(this.list[i] == undefined){
+            let x = Math.floor(Math.random() * ((width - 50) - 100)) + 100;
+            let y = Math.floor(Math.random() * ((height - 50) - 100)) + 100;
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.list[i] = [x, y];
+        }
     }
 
     /**
      * Dibuja la imagen en la posición aleatoria
      * Importante ejecutar este método después de place()
      */
-    draw() {
+    draw(i) {
         var array = this.aspectRatioWidth(60);
         var finalWidth = array[0];
         var finalHeight = array[1];
         var array = this.aspectRatioHeight(70,finalWidth, this.height);
         var finalWidth = array[0];
         var finalHeight = array[1];
-        push();
-        // Scale -1, 1 means reverse the x axis, keep y the same.
-        scale(-1, 1);
         // Because the x-axis is reversed, we need to draw at different x position.
-        //image(this.img, -this.x, this.y, finalWidth, finalHeight);
-        pop();
-        return [-this.x, this.y, finalWidth, finalHeight];
+        return [-this.list[i][0], this.list[i][1], finalWidth, finalHeight];
     }
 
     /**
