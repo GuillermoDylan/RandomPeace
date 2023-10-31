@@ -1,23 +1,20 @@
 
-const pages = "";var mySvg;
 var rp;
 var imageFactory;
 var userPlaced = false;
 
 function preload(){
   //#ifdef pages 
-	mySvg = loadImage("/img/peace_soldiers.svg");
-  flowerThrower = loadImage("/img/flower_thrower.svg");
+  flowerThrower = imageFactory.getFlowerThrower()
   //#endif
   imageFactory = new ImageFactory();
-	mySvg = imageFactory.getFlowerThrower();
 }
 
 function setup() {
   createCanvas(screen.width, screen.height);
   soldiers = [];
   // TODO habría que cambiarlo, es de prueba
-  rp = new RandomPlacer(imageFactory.getFlowerThrower(), 50);
+  rp = new RandomPlacer(flowerThrower, 50);
 }
 
 function draw() {

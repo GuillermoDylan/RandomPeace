@@ -7,7 +7,7 @@ class ImageFactory {
     }
 
     getFlowerThrower() {
-        return loadImage("img/flower_thrower.svg");
+        return loadImage(gitHubUrl + "img/flower_thrower.svg");
     }
 
 }
