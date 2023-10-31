@@ -2,6 +2,6 @@
 
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-f7df1e.svg)](https://www.javascript.com)
 [![made-with-p5js](https://img.shields.io/badge/Made%20with-P5js-ed225d.svg)](https://p5js.org/)
-[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://shields.io/)
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://uo283069.github.io/RandomPeace/src/)
 
 <p id="description">Random Peace is a homage to Charles Csuri 1967 “Random War”. As opposing to its reference the main theme in Random Peace is as its name states a random representation of a peaceful war between two (or several) sides.</p>
