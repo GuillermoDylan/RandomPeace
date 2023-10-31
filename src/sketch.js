@@ -2,12 +2,11 @@
 var rp;
 var imageFactory;
 var userPlaced = false;
+var flowerThrower;
 
 function preload(){
-  //#ifdef pages 
-  flowerThrower = imageFactory.getFlowerThrower()
-  //#endif
   imageFactory = new ImageFactory();
+  flowerThrower = imageFactory.getFlowerThrower()
 }
 
 function setup() {

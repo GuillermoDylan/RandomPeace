@@ -1,13 +1,12 @@
 class ImageFactory {
 
-    gitHubUrl = "/RandomPeace/";
-
+    
     constructor(){
-
+        this.gitHubUrl = "/RandomPeace/src/";
     }
 
     getFlowerThrower() {
-        return loadImage(gitHubUrl + "img/flower_thrower.svg");
+        return loadImage(this.gitHubUrl + "img/flower_thrower.svg");
     }
 
 }
