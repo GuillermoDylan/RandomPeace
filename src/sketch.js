@@ -3,6 +3,8 @@ var rp;
 var imageFactory;
 var userPlaced = false;
 var flowerThrower;
+var textGenerator;
+var flowers = [];
 
 function preload(){
   imageFactory = new ImageFactory();
@@ -43,6 +45,15 @@ function draw() {
       image(flowerThrower, coords[0], coords[1], coords[2], coords[3]);
       pop();
     }
+    // Colocamos el texto de las flores
+    if(flowers.length == 0){
+      generateText();
+      for(var i = 0; i < soldiers.length; i++){
+        fill(255);
+        text(flowers[i], 100, 10 + i);
+        console.log(flowers[i]);
+      }
+    }
   }
 }
 
@@ -55,4 +66,10 @@ function mouseClicked() {
 
 function addSoldier(x,y) {
   soldiers.push(new Soldier(x, y, "red"));
+}
+
+function generateText(){
+  textGenerator = new TextGenerator(50);
+  var text = textGenerator.getText();
+  flowers = text;
 }
