@@ -21,24 +21,21 @@ class TextGenerator {
         var text = await FileReader.read("./res/flowers.txt");
         var flowers = text.split("\n");
         var indices = Array.from({length: flowers.length}, (_, i) => i); // array of indices
+        var numberThrown = 0;
 
         for(let i = 0; i < this.number; i++){
             var randomIndex = Math.floor(Math.random() * indices.length); // get a random index
             var flowerIndex = indices[randomIndex]; // get the corresponding flower index
             indices.splice(randomIndex, 1); // remove the index from the array
 
-            this.text.push(flowers[flowerIndex]); 
-        } 
-        /**for(let i = 0; i < this.number; i++){
-            var randomX = Math.floor(Math.random() * (flowers.length));
-            while(this.text.includes(flowers[randomX])){
-                console.log(flowers[randomX] + " is already in the list")
-                console.log(this.text)
-                randomX = Math.floor(Math.random() * (flowers.length));
-                console.log(flowers[randomX] + " is the new random flower")
-            }
-            this.text.push(flowers[randomX]); 
-        }**/
+            // TODO vamos a calcular las flores de cada color...
+            // o hacer que sea un número aleatorio?
+
+            // Máximo 3, mínimo 0
+            numberThrown = Math.floor(Math.random() * 4);
+            if(numberThrown > 0)
+                this.text.push(flowers[flowerIndex] + " x" + numberThrown);
+        }
     }
 
 }

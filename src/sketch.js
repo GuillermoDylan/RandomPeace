@@ -56,7 +56,7 @@ function draw() {
       text(flowers[i], x,  (y * 25));
       y++;
       if(i>0 && i%10 == 0){
-          x += 150;
+          x += 180;
           y = 1;
       }
     }
