@@ -20,10 +20,15 @@ class TextGenerator {
     async generateText(){
         var text = await FileReader.read("./res/flowers.txt");
         var flowers = text.split("\n");
-        var flowerIndex = indices[randomIndex]; // get the corresponding flower index
-        indices.splice(randomIndex, 1); // remove the index from the array
+        var indices = Array.from({length: flowers.length}, (_, i) => i); // array of indices
 
-        this.text.push(flowers[flowerIndex]); 
+        for(let i = 0; i < this.number; i++){
+            var randomIndex = Math.floor(Math.random() * indices.length); // get a random index
+            var flowerIndex = indices[randomIndex]; // get the corresponding flower index
+            indices.splice(randomIndex, 1); // remove the index from the array
+
+            this.text.push(flowers[flowerIndex]); 
+        } 
         /**for(let i = 0; i < this.number; i++){
             var randomX = Math.floor(Math.random() * (flowers.length));
             while(this.text.includes(flowers[randomX])){
