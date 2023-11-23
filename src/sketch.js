@@ -16,6 +16,8 @@ function setup() {
   soldiers = [];
   // TODO habría que cambiarlo, es de prueba
   rp = new RandomPlacer(flowerThrower, 50);
+  textGenerator = new TextGenerator(50);
+  generateText();
 }
 
 function draw() {
@@ -46,12 +48,16 @@ function draw() {
       pop();
     }
     // Colocamos el texto de las flores
-    if(flowers.length == 0){
-      generateText();
-      for(var i = 0; i < soldiers.length; i++){
-        fill(255);
-        text(flowers[i], 100, 10 + i);
-        console.log(flowers[i]);
+    var x = 10;
+    var y = 1;
+    for(var i = 0; i < soldiers.length; i++){
+      fill(0);
+      textSize(20);
+      text(flowers[i], x,  (y * 25));
+      y++;
+      if(i>0 && i%10 == 0){
+          x += 150;
+          y = 1;
       }
     }
   }
@@ -69,7 +75,5 @@ function addSoldier(x,y) {
 }
 
 function generateText(){
-  textGenerator = new TextGenerator(50);
-  var text = textGenerator.getText();
-  flowers = text;
+  flowers = textGenerator.getText();;
 }
