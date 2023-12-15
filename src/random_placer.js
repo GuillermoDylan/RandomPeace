@@ -5,9 +5,9 @@ class RandomPlacer {
     
     /**
      * Importante: la imagen ya debe estar cargada
-     * @param {Image} image 
+     * @param {Image} image
      */
-    constructor(image, maxPlaced = 50) {
+    constructor(image) {
         this.x = 0;
         this.y = 0;
         this.img = image;

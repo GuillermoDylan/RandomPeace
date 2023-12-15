@@ -2,11 +2,16 @@ class ImageFactory {
 
     
     constructor(){
-        this.gitHubUrl = "/RandomPeace/src/";
+        this.gitHubUrl = "./";
+        this.colors = ["blue", "green", "yellow", "purple", "pink", "cyan"];
     }
 
     getFlowerThrower() {
-        return loadImage(this.gitHubUrl + "img/flower_thrower.svg");
+        return loadImage(this.gitHubUrl + "img/flower_thrower_" + this.getRandomColor() + ".png");
+    }
+
+    getRandomColor(){
+        return this.colors[Math.floor(Math.random() * this.colors.length)];
     }
 
 }
