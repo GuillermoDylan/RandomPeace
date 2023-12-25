@@ -1,3 +1,4 @@
+import json
 from fastapi import FastAPI, HTTPException, WebSocket
 #BaseModel garantiza que los datos almacenados concuerdan con los especificados
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field
@@ -8,7 +9,7 @@ import motor.motor_asyncio
 # Creación de la aplicacion
 app = FastAPI(title="RandomPeace API",summary="A simple API for the RandomPeace application")
 
-borrar = "mongodb+srv://uo283069:7Qt17FhvvszsNVc1@cluster0.z7h979y.mongodb.net/?retryWrites=true&w=majority"
+borrar = "mongodb+srv://uo283069:xxx.mongodb.net/?retryWrites=true&w=majority"
 #TODO Conexión con la base de datos
 #client = motor.motor_asyncio.AsyncIOMotorClient(os.environ["MONGODB_URL"])
 client = motor.motor_asyncio.AsyncIOMotorClient(borrar)
@@ -23,7 +24,6 @@ PyObjectId = Annotated[str, BeforeValidator(str)]
 # Clases de modelo de las entidades 
 # La clase usuario, será la que guarde las posiciones de los usuarios
 class User(BaseModel):
-    id: Optional[PyObjectId] = Field(alias="_id", default=None)
     positions: List[Tuple[int, int]]
     model_config = ConfigDict(
         populate_by_name=True,
@@ -64,6 +64,7 @@ async def set(user : User):
     """
         Post para ingresar como usuario en la "partida", si no hay espacio devuelve un 403.
     """
+    print("Llego aquí")
     # Se mira el número de usuarios ya en 'sesión'
     numberOfUsers = len(await users_collection.find().to_list(4))
     # Si el usuario se puede unir, lo añadimos
@@ -76,18 +77,32 @@ async def set(user : User):
     
     return {"userID":str(new_user.inserted_id)}
 
-@app.websocket("api/v1/ws")
+@app.post('/api/v1/sendPos')
+async def getPos(pos : str):
+    data = json.load(pos)
+    user = User(positions=data)
+    set(user)
+    return 
+
+@app.websocket("/")
 async def websocket_endpoint(websocket: WebSocket):
     # Lo añadimos a la serie de conexiones
     await manager.connect(websocket)
     while True:
+        data = await websocket.receive_text()
+        print(data)
+        obj = json.loads(data)
         # Si hay 4 usuarios, ejecutamos y acabamos
         if(manager.numberOfConnections() == 4):
             # TODO
             # Habría que parsear el dict de cada usuario y sacar las posiciones (positions)
             # a un objeto o mandarlas como json (mejor opcion) a la aplicación
-            await websocket.send_text(f"Message text was: TODO")
+            await websocket.send_text("Message text was: TODO")
         else:
+            user = User(positions=obj.get("positions"))
+            new_user = await users_collection.insert_one(
+                user.model_dump(by_alias=True, exclude=["id"])
+            )   
             # TODO
             # El usuario sigue esperando a que se una gente a la sesión
-            await websocket.send_text(f"Message text was: TODO")
+            await websocket.send_text("Message text was: TODO")

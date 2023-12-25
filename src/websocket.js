@@ -24,3 +24,25 @@
     </form>
 
  */
+
+class WebSocketAdapter {
+
+    constructor() {
+        this.ws = new WebSocket("ws://127.0.0.1:8000/")
+    }
+
+    connect() {
+        var ws = this.ws
+        if (ws != null) {
+            ws.onmessage = function (event) {
+                var messages = document.getElementById('text')
+                var content = document.createTextNode(event.data)
+                return messages, content
+            }
+        }
+    }
+
+    sendMessage(body) {
+        this.ws.send(body)
+    }
+}
