@@ -1,4 +1,4 @@
-./server/__pycache__
-./server/serverEnv/Lib
-./server/serverEnv/Scripts
-./server/serverEnv/pyvenv.cfg
+/server/__pycache__
+/server/serverEnv/Lib
+/server/serverEnv/Scripts
+/server/serverEnv/pyvenv.cfg
