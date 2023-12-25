@@ -2,18 +2,21 @@
 var rp;
 var imageFactory;
 var userPlaced = false;
-var flowerThrower;
+var flowerThrowers;
 
 function preload(){
   imageFactory = new ImageFactory();
-  flowerThrower = imageFactory.getFlowerThrower()
 }
 
 function setup() {
   createCanvas(screen.width, screen.height);
-  soldiers = [];
+  soldiers = [50];
+  flowerThrowers = [50];
+  for(var i = 0; i < 50; i++){
+   flowerThrowers[i] = imageFactory.getFlowerThrower();
+  }
   // TODO habría que cambiarlo, es de prueba
-  rp = new RandomPlacer(flowerThrower, 50);
+  rp = new RandomPlacer(flowerThrowers[0]);
 }
 
 function draw() {
@@ -22,7 +25,7 @@ function draw() {
   background(255);
 
   for (var i = 0;i < soldiers.length; i++) {
-    image(flowerThrower, soldiers[i].x, soldiers[i].y, 60, 70); 
+    image(flowerThrowers[i], soldiers[i].x, soldiers[i].y, 60, 70); 
   }
 
   // Luego habría que cambiarlo, es de prueba
@@ -40,7 +43,7 @@ function draw() {
       // Scale -1, 1 means reverse the x axis, keep y the same.
       scale(-1, 1);
       // Because the x-axis is reversed, we need to draw at different x position.
-      image(flowerThrower, coords[0], coords[1], coords[2], coords[3]);
+      image(flowerThrowers[i], coords[0], coords[1], coords[2], coords[3]);
       pop();
     }
   }
