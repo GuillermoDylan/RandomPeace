@@ -17,15 +17,17 @@ function setup() {
   for (var i = 0; i < 50; i++) {
     flowerThrowers[i] = imageFactory.getFlowerThrower();
   }
-  // TODO no se si aquí o antes de crear todos los objetos
+
   webSocket = new WebSocketAdapter()
-  var text, content = webSocket.connect()
-  console.log(text)
-  console.log(content)
 }
 
 function draw() {
   background(255);
+
+  // Manejo de mensajes de WebSocket
+  webSocket.getSocket().onmessage = function (event) {
+    console.log(event.data)
+  };
 
   for (var i = 0; i < soldiers.length; i++) {
     image(flowerThrowers[i], soldiers[i].x, soldiers[i].y, 60, 70);
