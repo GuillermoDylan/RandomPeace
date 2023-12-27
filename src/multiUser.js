@@ -5,6 +5,8 @@ var userPlaced = false;
 var flowerThrowers;
 var webSocket;
 var sentJSON = false
+var usersPositions = []
+var numberOfUsers = 0
 
 function preload() {
   imageFactory = new ImageFactory();
@@ -26,8 +28,23 @@ function draw() {
 
   // Manejo de mensajes de WebSocket
   webSocket.getSocket().onmessage = function (event) {
-    console.log(event.data)
+    data = JSON.parse(event.data)
+    console.log(data)
+    console.log(typeof (data))
+    // data contiene los arrays de cada jugador, solo tenemos que mostrarlos en pantalla
+    if (typeof (data) === "number") {
+      console.log("entra")
+      numberOfUsers = data
+    }
+    usersPositions = data
   };
+
+  // TODO borrar esto, era solo de prueba :D
+  if (numberOfUsers > 0) {
+    fill(0)
+    textSize(200)
+    text(numberOfUsers, 465, 188)
+  }
 
   for (var i = 0; i < soldiers.length; i++) {
     image(flowerThrowers[i], soldiers[i].x, soldiers[i].y, 60, 70);
@@ -59,6 +76,17 @@ function draw() {
 
     // Marcamos como enviado
     sentJSON = true
+  }
+
+  if (userPlaced && sentJSON && usersPositions.length > 0) {
+    // Primer nivel: usuarios
+    for (var i = 0; i < usersPositions.length; i++) {
+      // Segundo nivel: figuras del usuario
+      for (var j = 0; j < usersPositions[i].length; j++) {
+        // Tercer nivel: posición x e y de cada figura
+        image(flowerThrowers[i], usersPositions[i][j][0], usersPositions[i][j][1], 60, 70);
+      }
+    }
   }
 }
 

@@ -3,13 +3,13 @@ from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 #BaseModel garantiza que los datos almacenados concuerdan con los especificados
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field
 # Si quisiesemos un parametro opcional "Optional[type]"
-from typing import Annotated, Optional, List, Tuple
+from typing import Annotated, List, Tuple
 import motor.motor_asyncio
 
 # Creación de la aplicacion
 app = FastAPI(title="RandomPeace API",summary="A simple API for the RandomPeace application")
 
-borrar = "mongodb+srv://uo283069:7Qt17FhvvszsNVc1@cluster0.z7h979y.mongodb.net/?retryWrites=true&w=majority"
+borrar = "mongodb+srv://uo283069:@cluster0.z7h979y.mongodb.net/?retryWrites=true&w=majority"
 #TODO Conexión con la base de datos
 #client = motor.motor_asyncio.AsyncIOMotorClient(os.environ["MONGODB_URL"])
 client = motor.motor_asyncio.AsyncIOMotorClient(borrar)
@@ -97,16 +97,16 @@ async def websocket_endpoint(websocket: WebSocket):
                 new_user = await users_collection.insert_one(
                     user.model_dump(by_alias=True, exclude=["id"])
                 )
-                await websocket.send_text("Testing testing")
+                print("OK")
+
+            # Miramos el número de usuarios actualmente en la "sesión"
+            numberOfUsers = len(await users_collection.find().to_list(4))
+            
+            # Le enviamos a cada usuario el número de jugadores actualmente en la sesión
+            await manager.broadcast(str(numberOfUsers))
 
             # Si hay 4 usuarios, ejecutamos y acabamos
-            numberOfUsers = len(await users_collection.find().to_list(4))
-            # Cuando llega el cuarto usuario, debería haber 3
             if(numberOfUsers == 4):
-                # TODO
-                # Habría que parsear el dict de cada usuario y sacar las posiciones (positions)
-                # a un objeto o mandarlas como json (mejor opcion) a la aplicación
-                await manager.broadcast("Session ended")
                 # Recuperamos todos los usuarios
                 users = await users_collection.find().to_list(4)
                 positions = []
