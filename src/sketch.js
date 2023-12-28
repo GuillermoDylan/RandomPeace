@@ -17,7 +17,9 @@ function draw() {
   imageMode(CENTER);
   //image(mySvg, 500, 500);
   for (var i = 0; i < soldiers.length; i++) {
-    image(flowerThrower, soldiers[i].x, soldiers[i].y, 60, 70); 
+    // translate(width/2, height/2);
+    // rotate(soldiers[i].rotation);
+    image(flowerThrower, soldiers[i].x, soldiers[i].y, soldiers[i].width, soldiers[i].height); 
   }
 }
 
@@ -30,10 +32,18 @@ function addSoldier(x,y) {
     console.log("Max soldiers reached");
     return;
   }
-  // circunferencia de radio 50 con centro en x,y
+  // circunferencia de radio 150 con centro en x,y
   x = x + random(-SOLDIER_RANDOM_RANGE, SOLDIER_RANDOM_RANGE);
   y = y + random(-SOLDIER_RANDOM_RANGE, SOLDIER_RANDOM_RANGE);
 
-  soldiers.push(new Soldier(x, y, "red"));
+  // si el soldado aparece arriba del todo se pintara con 0.8 veces su tamaño
+  // si el soldado aparece abajo del todo se pintara con 0.4 veces su tamaño
+  let sizeFactor = map(y, 0, height, 0.08, 0.4);
+  let soldierWidth = flowerThrower.width * sizeFactor;
+  let soldierHeight = flowerThrower.height * sizeFactor;
+
+  let rotation = random(TWO_PI);
+
+  soldiers.push(new Soldier(x, y, "red", soldierWidth, soldierHeight, rotation));
   console.log("new Soldier added");
 }
