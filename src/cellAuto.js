@@ -3,34 +3,54 @@ class CellAuto {
     this.array = array;
   }
 
+  /**
+   * Computes the next iteration of the cellular automaton.
+   * @returns {Array} An array of positions that have changed in the iteration.
+   * 
+   * Conways Rules:
+   * Birth rule: An empty, or “dead,” cell with precisely three “live” neighbors (full cells) becomes live.
+   * Death rule: A live cell with zero or one neighbors dies of isolation; a live cell with four or more neighbors dies of overcrowding.
+   * Survival rule: A live cell with two or three neighbors remains alive.
+   */
   computeIteration() {
-    const newArray = [];
+    const newArray = []; // Create a new array to store the next iteration
+    const positions = []; // Create an array to store the positions that have changed
 
     for (let i = 0; i < this.array.length; i++) {
-      newArray[i] = [];
+      const currentSoldier = this.array[i]; // Get the current soldier at position i
+      const { x, y } = currentSoldier; // Get the x and y coordinates of the current soldier
+      newArray[i] = new Soldier(x, y); // Create a new soldier with the same coordinates
 
-      for (let j = 0; j < this.array[i].length; j++) {
-        const currentFigure = this.array[i][j];
-        let closestNeighbor = null;
-        let closestDistance = Infinity;
+      let closestSoldier = null; // Initialize the closest soldier as null
+      let closestDistance = Infinity; // Initialize the closest distance as infinity
+      let liveSoldiers = 0; // Initialize the count of live soldiers as 0
 
-        for (let x = 0; x < this.array.length; x++) {
-          for (let y = 0; y < this.array[x].length; y++) {
-            if (x === i && y === j) continue; // Skip current position
+      for (let j = 0; j < this.array.length; j++) {
+        if (i === j) continue; // Skip the current soldier
 
-            const neighborFigure = this.array[x][y];
-            const distance = Math.sqrt((x - i) ** 2 + (y - j) ** 2);
+        const neighborSoldier = this.array[j]; // Get the neighbor soldier at position j
+        const distance = Math.sqrt((neighborSoldier.x - x) ** 2 + (neighborSoldier.y - y) ** 2); // Calculate the distance between the current soldier and the neighbor
 
-            if (distance >= 25 && distance < closestDistance) {
-              closestNeighbor = neighborFigure;
-              closestDistance = distance;
-            }
-          }
+        if (distance <= 25 && liveSoldiers < 4) {
+          closestSoldier = neighborSoldier; // Update the closest soldier if the distance is within the range and closer than the previous closest soldier
+          closestDistance = distance; // Update the closest distance
+          liveSoldiers++; // Increment the count of live soldiers
         }
-        newArray[i][j] = closestNeighbor;
+      }
+
+      if (currentSoldier && (liveSoldiers === 2 || liveSoldiers === 3)) {
+        newArray[i] = currentSoldier; // Keep the current soldier if it is alive and has 2 or 3 live soldiers
+        positions.push(currentSoldier); // Add the position to the list of changed positions
+      } else if (!currentSoldier && liveSoldiers === 3) {
+        newArray[i] = closestSoldier; // Set the soldier to the closest neighbor if the current position is empty and has exactly 3 live soldiers
+        positions.push(closestSoldier); // Add the position to the list of changed positions
+      } else {
+        newArray[i] = null; // Set the soldier to null if none of the above conditions are met
       }
     }
 
-    this.array = newArray;
+    this.array = newArray; // Update the array with the new iteration
+    return positions; // Return the list of changed positions
   }
 }
+

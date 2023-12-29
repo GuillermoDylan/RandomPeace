@@ -4,7 +4,7 @@ class Soldier {
         this.x = x;
         this.y = y;
         this.color = color;
-        this.randomArea = 25; // 
+        this.randomArea = 25;
     }
 
     
