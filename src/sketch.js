@@ -26,9 +26,9 @@ function draw() {
   background(255);
 
   imageMode(CENTER);
-  
+
   for (var i = 0;i < soldiers.length; i++) {
-    image(flowerThrower, soldiers[i].x, soldiers[i].y, soldiers[i].width, soldiers[i].height); 
+    image(flowerThrowers[i], soldiers[i].x, soldiers[i].y, soldiers[i].width, soldiers[i].height); 
   }
 
   // Luego habría que cambiarlo, es de prueba
@@ -72,8 +72,8 @@ function addSoldier(x,y) {
   // si el soldado aparece arriba del todo se pintara con 0.8 veces su tamaño
   // si el soldado aparece abajo del todo se pintara con 0.4 veces su tamaño
   let sizeFactor = map(y, 0, height, 0.08, 0.4);
-  let soldierWidth = flowerThrower.width * sizeFactor;
-  let soldierHeight = flowerThrower.height * sizeFactor;
+  let soldierWidth = flowerThrowers[0].width * sizeFactor;
+  let soldierHeight = flowerThrowers[0].height * sizeFactor;
 
   let rotation = random(TWO_PI);
 
