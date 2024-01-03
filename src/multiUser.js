@@ -4,12 +4,14 @@ var imageFactory;
 var userPlaced = false;
 var flowerThrowers;
 var webSocket;
-var sentJSON = false
-var usersPositions = []
-var numberOfUsers = 0
+var sentJSON = false;
+var usersPositions = [];
+var numberOfUsers = 0;
+var loadingScreen;
 
 function preload() {
   imageFactory = new ImageFactory();
+  loadingScreen = new LoadingScreen();
 }
 
 function setup() {
@@ -38,13 +40,6 @@ function draw() {
     }
     usersPositions = data
   };
-
-  // TODO borrar esto, era solo de prueba :D
-  if (numberOfUsers > 0) {
-    fill(0)
-    textSize(200)
-    text(numberOfUsers, 465, 188)
-  }
 
   for (var i = 0; i < soldiers.length; i++) {
     image(flowerThrowers[i], soldiers[i].x, soldiers[i].y, 60, 70);
@@ -87,6 +82,16 @@ function draw() {
         image(flowerThrowers[i], usersPositions[i][j][0], usersPositions[i][j][1], 60, 70);
       }
     }
+  }
+
+  // Mostramos la pantalla de "carga" mientras que el usuario ya haya colocado y falten jugadores
+  if (numberOfUsers > 0 && numberOfUsers < 4) {
+    background(105, 105, 105, 99);
+    loadingScreen.draw();
+    textSize(20);
+    waitingFor = 4 - numberOfUsers;
+    fill(0);
+    text("Esperando a " + waitingFor + " usuarios...", window.width / 2 - 96, window.height / 2 + 120);
   }
 }
 
