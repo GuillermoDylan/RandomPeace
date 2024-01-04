@@ -8,8 +8,11 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(window.screen.width, window.screen.height);
-  MAX_SOLDIERS = 50;
+  createCanvas(windowWidth, windowHeight);
+  // ajusta automáticamente el número de soldados a colocar en función del ancho de la pantalla
+  MAX_SOLDIERS = map(windowWidth, 300, 1920, 5, 25);
+  MAX_SOLDIERS = int(MAX_SOLDIERS / 5) * 5;
+  
   SOLDIER_RANDOM_RANGE = 150;
   soldiers = [MAX_SOLDIERS];
   flowerThrowers = [MAX_SOLDIERS];
@@ -32,8 +35,8 @@ function draw() {
   }
 
   // Luego habría que cambiarlo, es de prueba
-  if(soldiers.length >= 50){
-    userPlaced = true;
+  if(soldiers.length >= MAX_SOLDIERS){
+    userPlaced = false;
   }
 
   // Posiciones de "IA"
@@ -53,6 +56,10 @@ function draw() {
   }
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
 function mouseClicked() {
   if(!userPlaced){
     return;
@@ -69,8 +76,8 @@ function addSoldier(x,y) {
   x = x + random(-SOLDIER_RANDOM_RANGE, SOLDIER_RANDOM_RANGE);
   y = y + random(-SOLDIER_RANDOM_RANGE, SOLDIER_RANDOM_RANGE);
 
-  // si el soldado aparece arriba del todo se pintara con 0.8 veces su tamaño
-  // si el soldado aparece abajo del todo se pintara con 0.4 veces su tamaño
+  // si el soldado aparece arriba del todo se pintara con 0.8 veces su tamaño 0.04
+  // si el soldado aparece abajo del todo se pintara con 0.4 veces su tamaño 0.12
   let sizeFactor = map(y, 0, height, 0.08, 0.4);
   let soldierWidth = flowerThrowers[0].width * sizeFactor;
   let soldierHeight = flowerThrowers[0].height * sizeFactor;
