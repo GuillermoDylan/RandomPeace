@@ -38,15 +38,14 @@ class RandomPlacer {
      * Dibuja la imagen en la posición aleatoria
      * Importante ejecutar este método después de place()
      */
-    draw(i) {
-        var array = this.aspectRatioWidth(60);
-        var finalWidth = array[0];
-        var finalHeight = array[1];
-        var array = this.aspectRatioHeight(70,finalWidth, this.height);
-        var finalWidth = array[0];
-        var finalHeight = array[1];
-        // Because the x-axis is reversed, we need to draw at different x position.
-        return [-this.list[i][0], this.list[i][1], finalWidth, finalHeight];
+    draw(i) {        
+        // si el soldado aparece arriba del todo se pintara con 0.8 veces su tamaño
+        // si el soldado aparece abajo del todo se pintara con 0.4 veces su tamaño
+        let sizeFactor = map(this.list[i][1], 0, windowHeight, 0.08, 0.4);
+        let soldierWidth = flowerThrowers[0].width * sizeFactor;
+        let soldierHeight = flowerThrowers[0].height * sizeFactor;
+        // Because the x-axis is reversed, we need to draw at different x position.        
+        return [-this.list[i][0], this.list[i][1], soldierWidth, soldierHeight];
     }
 
     /**
