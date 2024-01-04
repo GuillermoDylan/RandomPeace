@@ -27,6 +27,7 @@ function setup() {
 
 function draw() {
   background(255);
+  loadingScreen.draw(imageFactory, 4);
 
   // Manejo de mensajes de WebSocket
   webSocket.getSocket().onmessage = function (event) {
@@ -46,7 +47,7 @@ function draw() {
   }
 
   // Luego habría que cambiarlo, es de prueba
-  if (soldiers.length >= 50) {
+  if (soldiers.length >= 5) {
     userPlaced = true;
   }
 

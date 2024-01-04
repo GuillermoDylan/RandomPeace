@@ -3,10 +3,10 @@
 
 <svg
    xml:space="preserve"
-   width="210.452mm"
-   height="239.112mm"
-   style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-   viewBox="0 0 224.956 255.591"
+   width="117.21513mm"
+   height="152.85373mm"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 125.2934 163.38803"
    version="1.1"
    id="svg1"
    sodipodi:docname="peace_soldier_right.svg"
@@ -24,9 +24,9 @@
    inkscape:pagecheckerboard="0"
    inkscape:deskcolor="#d1d1d1"
    inkscape:document-units="mm"
-   inkscape:zoom="1"
-   inkscape:cx="585.5"
-   inkscape:cy="517.5"
+   inkscape:zoom="0.66"
+   inkscape:cx="396.21212"
+   inkscape:cy="328.0303"
    inkscape:window-width="1920"
    inkscape:window-height="1009"
    inkscape:window-x="-8"
@@ -46,7 +46,9 @@
  </defs>
  <g
    id="__x0023_Layer_x0020_1"
-   inkscape:label="__x0023_Layer 1">
+   inkscape:label="__x0023_Layer 1"
+   inkscape:groupmode="layer"
+   transform="translate(-53.445896,-53.445896)">
   <metadata
    id="CorelCorpID_0Corel-Layer" />
   <g
