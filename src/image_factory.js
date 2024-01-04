@@ -7,7 +7,7 @@ class ImageFactory {
     }
 
     getFlowerThrower() {
-        return loadImage(this.gitHubUrl + "img/flower_thrower_" + this.getRandomColor() + ".png");
+        return loadImage(this.gitHubUrl + "img/flower_thrower_" + this.getRandomColor() + ".svg");
     }
 
     getRandomColor(){
