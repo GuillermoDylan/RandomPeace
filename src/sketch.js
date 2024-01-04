@@ -1,6 +1,6 @@
 var rp;
 var imageFactory;
-var userPlaced = false;
+var userPlaced = true;
 var flowerThrowers;
 
 function preload(){
@@ -8,7 +8,7 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(screen.width, screen.height);
+  createCanvas(window.screen.width, window.screen.height);
   MAX_SOLDIERS = 50;
   SOLDIER_RANDOM_RANGE = 150;
   soldiers = [MAX_SOLDIERS];
@@ -37,7 +37,7 @@ function draw() {
   }
 
   // Posiciones de "IA"
-  if(userPlaced){
+  if(!userPlaced){
     for (var i = 0;i < soldiers.length; i++) {
       // Generamos la posición aleatoria
       rp.place(width, height, i);
@@ -54,7 +54,7 @@ function draw() {
 }
 
 function mouseClicked() {
-  if(userPlaced){
+  if(!userPlaced){
     return;
   }
   addSoldier(mouseX, mouseY);
