@@ -87,7 +87,7 @@ function draw() {
   // Mostramos la pantalla de "carga" mientras que el usuario ya haya colocado y falten jugadores
   if (numberOfUsers > 0 && numberOfUsers < 4) {
     background(105, 105, 105, 99);
-    loadingScreen.draw();
+    loadingScreen.draw(imageFactory);
     textSize(20);
     waitingFor = 4 - numberOfUsers;
     fill(0);
