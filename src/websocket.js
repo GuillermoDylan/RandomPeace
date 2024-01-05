@@ -28,7 +28,15 @@
 class WebSocketAdapter {
 
     constructor() {
-        this.ws = new WebSocket("ws://127.0.0.1:8000/")
+        try {
+            this.ws = new WebSocket("ws://127.0.0.1:8000/")
+        } catch (err) {
+            this.ws = null;
+        }
+    }
+
+    wasConnectionSuccesfull() {
+        return this.ws != null;
     }
 
     getSocket() {

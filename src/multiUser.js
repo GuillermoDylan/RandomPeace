@@ -8,6 +8,7 @@ var sentJSON = false;
 var usersPositions = [];
 var numberOfUsers = 0;
 var loadingScreen;
+var alphaV = 0;
 
 function preload() {
   imageFactory = new ImageFactory();
@@ -27,7 +28,10 @@ function setup() {
 
 function draw() {
   background(255);
-  loadingScreen.draw(imageFactory, 4);
+  if (!webSocket.wasConnectionSuccesfull()) {
+    text("La sesión está llena, por favor vuelve a intentarlo más tarde", windowWidth / 2, windowHeight / 2);
+    return;
+  }
 
   // Manejo de mensajes de WebSocket
   webSocket.getSocket().onmessage = function (event) {
@@ -74,7 +78,7 @@ function draw() {
     sentJSON = true
   }
 
-  if (userPlaced && sentJSON && usersPositions.length > 0) {
+  if (alphaV >= 255 && userPlaced && sentJSON && usersPositions.length > 0) {
     // Primer nivel: usuarios
     for (var i = 0; i < usersPositions.length; i++) {
       // Segundo nivel: figuras del usuario
@@ -86,14 +90,25 @@ function draw() {
   }
 
   // Mostramos la pantalla de "carga" mientras que el usuario ya haya colocado y falten jugadores
-  if (numberOfUsers > 0 && numberOfUsers < 4) {
-    background(105, 105, 105, 99);
-    loadingScreen.draw(imageFactory);
-    textSize(20);
-    waitingFor = 4 - numberOfUsers;
-    fill(0);
-    text("Esperando a " + waitingFor + " usuarios...", window.width / 2 - 96, window.height / 2 + 120);
+  // Importante hacerlo al final, así no interferimos en el "dibujado" del resto de figuras
+  if (userPlaced && numberOfUsers > 0 && numberOfUsers <= 4) {
+    if (!loadingScreen.isFinished()) {
+      if (alphaV == 255) {
+        background(255);
+      }
+      else {
+        background(255, 255, 255, alphaV);
+      }
+      loadingScreen.draw(imageFactory, numberOfUsers);
+      textSize(100);
+      fill(0);
+      text(numberOfUsers + "/4", 10, 100);
+      if (alphaV < 255) {
+        alphaV = alphaV + 1;
+      }
+    }
   }
+
 }
 
 function mouseClicked() {

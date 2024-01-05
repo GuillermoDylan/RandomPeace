@@ -5,6 +5,7 @@ class LoadingScreen {
         this.fadeInSecond = 0;
         this.fadeInThird = 0;
         this.fadeInLast = 0;
+        this.startMS = 0;
     }
 
     draw(imgFactory, numberOfUsers) {
@@ -13,8 +14,8 @@ class LoadingScreen {
         // Calculate the rotation angle
         let rotationAngle = frameCount * spinnerSpeed * TWO_PI;
         // Save the initial transformation state
-        tint(255, this.fadeInFirst);
         push();
+        tint(255, this.fadeInFirst);
         // Translate to the mouse position
         translate(width / 2, (height / 2) - 200);
         // Apply rotation
@@ -69,9 +70,15 @@ class LoadingScreen {
             // Incrementamos su fade in condicionalmente
             this.fadeInLast = this.fadeInLast < 255 ? this.fadeInLast + 1 : 255;
         }
-
         pop();
+    }
 
+    isFinished() {
+        if (this.fadeInLast == 254) {
+            this.startMS = Date.now();
+            return this.startMS - Date.now() < 3000;
+        }
+        return false;
     }
 
     rescale(img, imageSize) {
