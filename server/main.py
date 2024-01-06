@@ -1,4 +1,5 @@
 import json
+import os
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 #BaseModel garantiza que los datos almacenados concuerdan con los especificados
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field
@@ -9,10 +10,7 @@ import motor.motor_asyncio
 # Creación de la aplicacion
 app = FastAPI(title="RandomPeace API",summary="A simple API for the RandomPeace application")
 
-borrar = "mongodb+srv://uo283069:@cluster0.z7h979y.mongodb.net/?retryWrites=true&w=majority"
-#TODO Conexión con la base de datos
-#client = motor.motor_asyncio.AsyncIOMotorClient(os.environ["MONGODB_URL"])
-client = motor.motor_asyncio.AsyncIOMotorClient(borrar)
+client = motor.motor_asyncio.AsyncIOMotorClient(os.environ["MONGODB_URL"])
 db = client.get_database("randompeace")
 users_collection = db.get_collection("users")
 
