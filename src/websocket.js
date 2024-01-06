@@ -29,7 +29,7 @@ class WebSocketAdapter {
 
     constructor() {
         try {
-            this.ws = new WebSocket("ws://127.0.0.1:8000/")
+            this.ws = new WebSocket("wss://random-peace.onrender.com:10000/")
         } catch (err) {
             this.ws = null;
         }
