@@ -3,6 +3,7 @@ var rp;
 var imageFactory;
 var userPlaced = false;
 var flowerThrowers;
+var automaton;
 
 function preload(){
   imageFactory = new ImageFactory();
@@ -16,37 +17,27 @@ function setup() {
    flowerThrowers[i] = imageFactory.getFlowerThrower();
   }
   // TODO habría que cambiarlo, es de prueba
-  rp = new RandomPlacer(flowerThrowers[0]);
+  //rp = new RandomPlacer(flowerThrowers[0]);
 }
 
 function draw() {
-  var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-  var height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
   background(255);
+  if(!userPlaced){
+    for (var i = 0;i < soldiers.length; i++) {
+      image(flowerThrowers[i], soldiers[i].x, soldiers[i].y, 60, 70); 
+    }
 
-  for (var i = 0;i < soldiers.length; i++) {
-    image(flowerThrowers[i], soldiers[i].x, soldiers[i].y, 60, 70); 
-  }
-
-  // Luego habría que cambiarlo, es de prueba
-  if(soldiers.length >= 50){
-    userPlaced = true;
+    // Luego habría que cambiarlo, es de prueba
+    if(soldiers.length >= 50){
+      userPlaced = true;
+    }
+  }else {
+    if(automaton == null){
+      automaton = new AutomataMode(soldiers, flowerThrowers);
+    }
+    automaton.draw();
   }
   
-  if(userPlaced){
-    for (var i = 0;i < soldiers.length; i++) {
-      // Generamos la posición aleatoria
-      rp.place(width, height, i);
-      // Obtenemos sus coordenadas y tamaño
-      var coords = rp.draw(i);
-      push();
-      // Scale -1, 1 means reverse the x axis, keep y the same.
-      scale(-1, 1);
-      // Because the x-axis is reversed, we need to draw at different x position.
-      image(flowerThrowers[i], coords[0], coords[1], coords[2], coords[3]);
-      pop();
-    }
-  }
 }
 
 function mouseClicked() {
