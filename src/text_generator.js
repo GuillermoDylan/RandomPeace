@@ -34,7 +34,7 @@ class TextGenerator {
             // Máximo 3, mínimo 0
             numberThrown = Math.floor(Math.random() * 4);
             if(numberThrown > 0)
-                this.text.push(flowers[flowerIndex] + " x" + numberThrown);
+                this.text.push(flowers[flowerIndex] + " " + numberThrown);
         }
     }
 
