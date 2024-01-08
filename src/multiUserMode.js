@@ -1,4 +1,5 @@
 "use strict";
+var num = 0;
 class MultiUser {
 
     constructor() {
@@ -38,7 +39,7 @@ class MultiUser {
         }
 
         // Manejo de mensajes de WebSocket
-        this.webSocket.getSocket().onmessage = function (event) {
+        this.webSocket.getSocket().onmessage = (event) => {
             var data = JSON.parse(event.data)
             console.log(data)
             console.log(typeof (data))
@@ -46,9 +47,12 @@ class MultiUser {
             if (typeof (data) === "number") {
                 console.log("entra")
                 this.numberOfUsers = data
-            }
-            this.usersPositions = data
-        };
+                num = data;
+            }else {
+                this.usersPositions = data
+                this.numberOfUsers = data.length
+            };;
+       };
 
         for (var i = 0; i < this.soldiers.length; i++) {
             image(this.flowerThrowers[i], this.soldiers[i].x, this.soldiers[i].y, 60, 70);
@@ -82,9 +86,9 @@ class MultiUser {
             this.sentJSON = true
         }
 
-        if (this.alphaV >= 255 && userPlaced && this.sentJSON && usersPositions.length > 0) {
+        if (this.alphaV >= 255 && this.userPlaced && this.sentJSON && this.usersPositions.length > 0) {
             // Primer nivel: usuarios
-            for (var i = 0; i < usersPositions.length; i++) {
+            for (var i = 0; i < this.usersPositions.length; i++) {
                 // Segundo nivel: figuras del usuario
                 for (var j = 0; j < this.usersPositions[i].length; j++) {
                     // Tercer nivel: posición x e y de cada figura
