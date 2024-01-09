@@ -28,7 +28,7 @@ function draw() {
     }
 
     // Luego habría que cambiarlo, es de prueba
-    if(soldiers.length >= 50){
+    if(soldiers.length >= 25){
       userPlaced = true;
     }
   }else {
