@@ -41,24 +41,21 @@ class MultiUser {
         // Manejo de mensajes de WebSocket
         this.webSocket.getSocket().onmessage = (event) => {
             var data = JSON.parse(event.data)
-            console.log(data)
-            console.log(typeof (data))
             // data contiene los arrays de cada jugador, solo tenemos que mostrarlos en pantalla
             if (typeof (data) === "number") {
-                console.log("entra")
                 this.numberOfUsers = data
                 num = data;
-            }else {
+            } else {
                 this.usersPositions = data
                 this.numberOfUsers = data.length
             };;
-       };
+        };
 
         for (var i = 0; i < this.soldiers.length; i++) {
             image(this.flowerThrowers[i], this.soldiers[i].x, this.soldiers[i].y, 60, 70);
         }
 
-        // Luego habría que cambiarlo, es de prueba
+        // TODO Luego habría que cambiarlo, es de prueba
         if (this.soldiers.length >= 5) {
             this.userPlaced = true;
         }
@@ -86,7 +83,7 @@ class MultiUser {
             this.sentJSON = true
         }
 
-        if (this.alphaV >= 255 && this.userPlaced && this.sentJSON && this.usersPositions.length > 0) {
+        if (this.alphaV >= 254 && this.userPlaced && this.sentJSON && this.usersPositions.length > 0) {
             // Primer nivel: usuarios
             for (var i = 0; i < this.usersPositions.length; i++) {
                 // Segundo nivel: figuras del usuario
