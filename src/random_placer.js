@@ -2,7 +2,7 @@
  * Recive una imagen y la coloca en una posición aleatoria de la pantalla
  */
 class RandomPlacer {
-    
+
     /**
      * Importante: la imagen ya debe estar cargada
      * @param {Image} image
@@ -23,7 +23,7 @@ class RandomPlacer {
      * @param {number} height 
      */
     place(width, height, i) {
-        if(this.list[i] == undefined){
+        if (this.list[i] == undefined) {
             let x = Math.floor(Math.random() * ((width - 50) - 100)) + 100;
             let y = Math.floor(Math.random() * ((height - 50) - 100)) + 100;
             this.x = x;
@@ -37,13 +37,14 @@ class RandomPlacer {
     /**
      * Dibuja la imagen en la posición aleatoria
      * Importante ejecutar este método después de place()
+     * @param {Number} la posición en el array a dibujar
      */
-    draw(i) {        
+    draw(i) {
         // si el soldado aparece arriba del todo se pintara con 0.8 veces su tamaño
         // si el soldado aparece abajo del todo se pintara con 0.4 veces su tamaño
         let sizeFactor = map(this.list[i][1], 0, windowHeight, 0.08, 0.4);
-        let soldierWidth = flowerThrowers[0].width * sizeFactor;
-        let soldierHeight = flowerThrowers[0].height * sizeFactor;
+        let soldierWidth = this.img.width * sizeFactor;
+        let soldierHeight = this.img.height * sizeFactor;
         // Because the x-axis is reversed, we need to draw at different x position.        
         return [-this.list[i][0], this.list[i][1], soldierWidth, soldierHeight];
     }
@@ -53,7 +54,7 @@ class RandomPlacer {
      * @param {number} displayWidth 
      * @returns 
      */
-    aspectRatioWidth(displayWidth){
+    aspectRatioWidth(displayWidth) {
         // Primero comprobar si hay que escalar la anchura
         var finalWidth = this.img.width;
         var finalHeight = this.img.height;
@@ -65,7 +66,7 @@ class RandomPlacer {
         }
         return [finalHeight, finalWidth];
     }
-      
+
     /**
      * Mantiene la relación de aspecto de la imagen en función de la altura
      * @param {number} finalHeight 
@@ -73,7 +74,7 @@ class RandomPlacer {
      * @param {number} displayHeight 
      * @returns 
      */
-    aspectRatioHeight(finalHeight, finalWidth, displayHeight){
+    aspectRatioHeight(finalHeight, finalWidth, displayHeight) {
         // Después de aplicar el escalado de anchura, commprobamos la altura
         var finalWidth = finalWidth;
         if (finalHeight > displayHeight) {
@@ -84,6 +85,6 @@ class RandomPlacer {
         }
         return [finalHeight, finalWidth];
     }
-      
+
 
 }

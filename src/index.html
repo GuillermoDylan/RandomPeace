@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sketch</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Sketch</title>
 
-    <script src="libraries/p5.min.js"></script>
-    <script src="libraries/p5.sound.min.js"></script>
-    <script src="libraries/quicksettings.js"></script>
-    <script src="libraries/p5.gui.js"></script>
-  </head>
+  <link rel="stylesheet" type="text/css" href="style.css">
 
-  <body>
-    <script src="sketch.js"></script>
-    <script src="random_placer.js"></script>
-    <script src="image_factory.js"></script>
-    <script src="soldier.js"></script>
-    <script src="file_reader.js"></script>
+  <script src="libraries/p5.min.js"></script>
+  <script src="libraries/p5.sound.min.js"></script>
+  <script src="libraries/quicksettings.js"></script>
+  <script src="libraries/p5.gui.js"></script>
+
+  <!-- Cuidado con el orden de los imports! :) -->
+  <script src="random_placer.js"></script>
+  <script src="image_factory.js"></script>
+  <script src="soldier.js"></script>
+  <script src="websocket.js"></script>
+  <script src="loadingScreen.js"></script>
+  <script src="multiUserMode.js"></script>
+  <script src="baseMode.js"></script>
+  <script src="randomPeace.js"></script>
+</head>
+
+<body>
+</body>
+
     <script src="text_generator.js"></script>
-  </body>
+    <script src="file_reader.js"></script>
 </html>
