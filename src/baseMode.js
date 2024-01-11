@@ -6,6 +6,7 @@ class BaseMode {
         this.imageFactory;
         this.userPlaced = false;
         this.flowerThrowers;
+        this.textGenerator;
     }
 
     preload() {
@@ -25,8 +26,13 @@ class BaseMode {
         for (var i = 0; i < 50; i++) {
             this.flowerThrowers[i] = this.imageFactory.getFlowerThrower();
         }
-        // TODO habría que cambiarlo, es de prueba
+
+        // Posicionador aleatorio para la "IA"
         this.rp = new RandomPlacer(this.flowerThrowers[0]);
+
+        this.textGenerator = new TextGenerator(50);
+        // Generamos las flores
+        this.textGenerator.generateText();
     }
 
     draw() {
@@ -58,6 +64,8 @@ class BaseMode {
                 image(this.flowerThrowers[i], coords[0], coords[1], coords[2], coords[3]);
                 pop();
             }
+            // Colocamos el texto de las flores
+            this.textGenerator.draw(this.soldiers);
         }
 
     }
@@ -88,6 +96,10 @@ class BaseMode {
         // circunferencia de radio 150 con centro en x,y
         x = x + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
         y = y + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
+
+        while (y <= 230 && x >= 500 && x <= 1400 || y < 0) {
+            y = y + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
+        }
 
         // si el soldado aparece arriba del todo se pintara con 0.8 veces su tamaño 0.04
         // si el soldado aparece abajo del todo se pintara con 0.4 veces su tamaño 0.12

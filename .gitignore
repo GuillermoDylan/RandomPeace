@@ -1,3 +1,5 @@
 /server/__pycache__
+/server/__pycache__/*
 /server/serverEnv/Lib
+/server/serverEnv/Lib/*
 /server/serverEnv/Scripts/*.exe

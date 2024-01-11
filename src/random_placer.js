@@ -37,6 +37,7 @@ class RandomPlacer {
     /**
      * Dibuja la imagen en la posición aleatoria
      * Importante ejecutar este método después de place()
+     * @param {Number} la posición en el array a dibujar
      */
     draw(i) {
         // si el soldado aparece arriba del todo se pintara con 0.8 veces su tamaño

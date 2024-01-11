@@ -1,5 +1,5 @@
 "use strict";
-var mode = new MultiUser();
+var mode = new BaseMode();
 
 function preload() {
     mode.preload();
