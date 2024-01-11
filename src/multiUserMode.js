@@ -4,7 +4,6 @@ class MultiUser {
 
     constructor() {
         this.rp;
-        this.imageFactory;
         this.userPlaced = false;
         this.flowerThrowers;
         this.webSocket;
@@ -16,7 +15,6 @@ class MultiUser {
     }
 
     preload() {
-        this.imageFactory = new ImageFactory();
         this.loadingScreen = new LoadingScreen();
     }
 
@@ -25,7 +23,7 @@ class MultiUser {
         this.soldiers = [50];
         this.flowerThrowers = [50];
         for (var i = 0; i < 50; i++) {
-            this.flowerThrowers[i] = this.imageFactory.getFlowerThrower();
+            this.flowerThrowers[i] = imageFactory.getFlowerThrower();
         }
 
         this.webSocket = new WebSocketAdapter()
@@ -104,7 +102,7 @@ class MultiUser {
                 else {
                     background(255, 255, 255, this.alphaV);
                 }
-                this.loadingScreen.draw(this.imageFactory, this.numberOfUsers);
+                this.loadingScreen.draw(imageFactory, this.numberOfUsers);
                 textSize(100);
                 fill(0);
                 text(this.numberOfUsers + "/4", 10, 100);
