@@ -1,32 +1,45 @@
 var j = 0;
-class AutomataMode {
+class AutomataMode extends BaseMode {
 
-    constructor(array, flowerThrowers) {
-        this.array = array;
-        this.flowerThrowers = flowerThrowers;
-        this.cellAuto = new CellAuto(array);
+    constructor() {
+        super();
+        this.array;
+        this.flowerThrowers;
+        this.cellAuto;
         this.iteration = 0;
-        console.log(array)
     }
 
-    setup(){
+    preload() {
+    }
+
+    setup() {
+        super.setup();
         createCanvas(screen.width, screen.height);
     }
 
-    async draw(){
-        
-        this.array = this.cellAuto.computeIteration(performance.now());    
+    async draw() {
+        background(255);
 
-        if(this.array.length > 0){
-            for (var i = 0;i < this.array.length && this.array[i] != undefined; i++) {
-                image(this.flowerThrowers[i], this.array[i].x, this.array[i].y, 60, 70); 
+        imageMode(CENTER);
+
+        for (var i = 0; i < this.soldiers.length; i++) {
+            if (this.soldiers[i] != null || this.soldiers[i] != undefined) {
+                image(this.flowerThrowers[i], this.soldiers[i].x, this.soldiers[i].y, this.soldiers[i].width, this.soldiers[i].height);
             }
         }
-                
-        // sleep en Javascript...
-        //await new Promise(r => setTimeout(r, 5000));
-        //console.log("Iteration: " + this.iteration)
-        this.iteration++;
+
+        if (this.soldiers.length >= this.MAX_SOLDIERS) {
+            this.userPlaced = true;
+        }
+
+        // Automata celular
+        if (this.userPlaced) {
+            if (this.cellAuto === undefined || this.cellAuto === null) {
+                this.cellAuto = new CellAuto(this.soldiers);
+            }
+            this.soldiers = this.cellAuto.computeIteration(performance.now(), this.flowerThrowers);
+            this.iteration++;
+        }
     }
 
 }

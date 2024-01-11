@@ -3,18 +3,12 @@ class BaseMode {
 
     constructor() {
         this.rp;
-        this.imageFactory;
         this.userPlaced = false;
         this.flowerThrowers;
         this.textGenerator;
-        this.X_BOUND_LEFT = 500;
-        this.X_BOUND_RIGHT = 1400;
-        this.Y_BOUND_DOWN = 230;
-        this.Y_BOUND_UP = 0;
     }
 
     preload() {
-        this.imageFactory = new ImageFactory();
     }
 
     setup() {
@@ -28,11 +22,11 @@ class BaseMode {
         // si lo añadiesemos se nos añadiría dentro un "soldado" nuevo automáticamente
         this.flowerThrowers = [];
         for (var i = 0; i < 50; i++) {
-            this.flowerThrowers[i] = this.imageFactory.getFlowerThrower();
+            this.flowerThrowers[i] = imageFactory.getFlowerThrower();
         }
 
         // Posicionador aleatorio para la "IA"
-        this.rp = new RandomPlacer(this.flowerThrowers[0], this);
+        this.rp = new RandomPlacer(this.flowerThrowers[0]);
 
         this.textGenerator = new TextGenerator(50);
         // Generamos las flores
@@ -93,27 +87,9 @@ class BaseMode {
     }
 
     addSoldier(x, y) {
-        if (this.soldiers.length > this.MAX_SOLDIERS) {
-            console.log("Max soldiers reached");
-            return;
-        }
-        // circunferencia de radio 150 con centro en x,y
-        x = x + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
-        y = y + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
+        var positioner = new FigureUtil();
 
-        while (y <= this.Y_BOUND_DOWN && x >= this.X_BOUND_LEFT && this.X_BOUND_RIGHT <= 1400 || y < this.Y_BOUND_UP) {
-            y = y + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
-        }
-
-        // si el soldado aparece arriba del todo se pintara con 0.8 veces su tamaño 0.04
-        // si el soldado aparece abajo del todo se pintara con 0.4 veces su tamaño 0.12
-        let sizeFactor = map(y, 0, height, 0.08, 0.4);
-        let soldierWidth = this.flowerThrowers[0].width * sizeFactor;
-        let soldierHeight = this.flowerThrowers[0].height * sizeFactor;
-
-        let rotation = random(TWO_PI);
-
-        this.soldiers.push(new Soldier(x, y, "red", soldierWidth, soldierHeight, rotation));
+        this.soldiers.push(positioner.createNewFigure(x, y, this.flowerThrowers));
         console.log("new Soldier added");
     }
 
