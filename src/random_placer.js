@@ -2,18 +2,20 @@
  * Recive una imagen y la coloca en una posición aleatoria de la pantalla
  */
 class RandomPlacer {
-    
+
     /**
      * Importante: la imagen ya debe estar cargada
      * @param {Image} image
+     * @param {BaseMode} baseMode El propio contexto de la applicación
      */
-    constructor(image) {
+    constructor(image, baseMode) {
         this.x = 0;
         this.y = 0;
         this.img = image;
         this.width = 0;
         this.height = 0;
         this.list = [];
+        this.baseMode = baseMode;
     }
 
     /**
@@ -23,9 +25,13 @@ class RandomPlacer {
      * @param {number} height 
      */
     place(width, height, i) {
-        if(this.list[i] == undefined){
+        if (this.list[i] == undefined) {
             let x = Math.floor(Math.random() * ((width - 50) - 100)) + 100;
             let y = Math.floor(Math.random() * ((height - 50) - 100)) + 100;
+            while (y <= this.baseMode.Y_BOUND_DOWN && x >= this.baseMode.X_BOUND_LEFT && this.baseMode.X_BOUND_RIGHT <= 1400 || y < this.baseMode.Y_BOUND_UP) {
+                x = Math.floor(Math.random() * ((width - 50) - 100)) + 100;
+                y = Math.floor(Math.random() * ((height - 50) - 100)) + 100;
+            }
             this.x = x;
             this.y = y;
             this.width = width;
@@ -37,16 +43,16 @@ class RandomPlacer {
     /**
      * Dibuja la imagen en la posición aleatoria
      * Importante ejecutar este método después de place()
+     * @param {Number} la posición en el array a dibujar
      */
     draw(i) {
-        var array = this.aspectRatioWidth(60);
-        var finalWidth = array[0];
-        var finalHeight = array[1];
-        var array = this.aspectRatioHeight(70,finalWidth, this.height);
-        var finalWidth = array[0];
-        var finalHeight = array[1];
-        // Because the x-axis is reversed, we need to draw at different x position.
-        return [-this.list[i][0], this.list[i][1], finalWidth, finalHeight];
+        // si el soldado aparece arriba del todo se pintara con 0.8 veces su tamaño
+        // si el soldado aparece abajo del todo se pintara con 0.4 veces su tamaño
+        let sizeFactor = map(this.list[i][1], 0, windowHeight, 0.08, 0.4);
+        let soldierWidth = this.img.width * sizeFactor;
+        let soldierHeight = this.img.height * sizeFactor;
+        // Because the x-axis is reversed, we need to draw at different x position.        
+        return [-this.list[i][0], this.list[i][1], soldierWidth, soldierHeight];
     }
 
     /**
@@ -54,7 +60,7 @@ class RandomPlacer {
      * @param {number} displayWidth 
      * @returns 
      */
-    aspectRatioWidth(displayWidth){
+    aspectRatioWidth(displayWidth) {
         // Primero comprobar si hay que escalar la anchura
         var finalWidth = this.img.width;
         var finalHeight = this.img.height;
@@ -66,7 +72,7 @@ class RandomPlacer {
         }
         return [finalHeight, finalWidth];
     }
-      
+
     /**
      * Mantiene la relación de aspecto de la imagen en función de la altura
      * @param {number} finalHeight 
@@ -74,7 +80,7 @@ class RandomPlacer {
      * @param {number} displayHeight 
      * @returns 
      */
-    aspectRatioHeight(finalHeight, finalWidth, displayHeight){
+    aspectRatioHeight(finalHeight, finalWidth, displayHeight) {
         // Después de aplicar el escalado de anchura, commprobamos la altura
         var finalWidth = finalWidth;
         if (finalHeight > displayHeight) {
@@ -85,6 +91,6 @@ class RandomPlacer {
         }
         return [finalHeight, finalWidth];
     }
-      
+
 
 }
