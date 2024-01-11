@@ -6,14 +6,16 @@ class RandomPlacer {
     /**
      * Importante: la imagen ya debe estar cargada
      * @param {Image} image
+     * @param {BaseMode} baseMode El propio contexto de la applicación
      */
-    constructor(image) {
+    constructor(image, baseMode) {
         this.x = 0;
         this.y = 0;
         this.img = image;
         this.width = 0;
         this.height = 0;
         this.list = [];
+        this.baseMode = baseMode;
     }
 
     /**
@@ -26,6 +28,10 @@ class RandomPlacer {
         if (this.list[i] == undefined) {
             let x = Math.floor(Math.random() * ((width - 50) - 100)) + 100;
             let y = Math.floor(Math.random() * ((height - 50) - 100)) + 100;
+            while (y <= this.baseMode.Y_BOUND_DOWN && x >= this.baseMode.X_BOUND_LEFT && this.baseMode.X_BOUND_RIGHT <= 1400 || y < this.baseMode.Y_BOUND_UP) {
+                x = Math.floor(Math.random() * ((width - 50) - 100)) + 100;
+                y = Math.floor(Math.random() * ((height - 50) - 100)) + 100;
+            }
             this.x = x;
             this.y = y;
             this.width = width;

@@ -7,6 +7,10 @@ class BaseMode {
         this.userPlaced = false;
         this.flowerThrowers;
         this.textGenerator;
+        this.X_BOUND_LEFT = 500;
+        this.X_BOUND_RIGHT = 1400;
+        this.Y_BOUND_DOWN = 230;
+        this.Y_BOUND_UP = 0;
     }
 
     preload() {
@@ -28,7 +32,7 @@ class BaseMode {
         }
 
         // Posicionador aleatorio para la "IA"
-        this.rp = new RandomPlacer(this.flowerThrowers[0]);
+        this.rp = new RandomPlacer(this.flowerThrowers[0], this);
 
         this.textGenerator = new TextGenerator(50);
         // Generamos las flores
@@ -97,7 +101,7 @@ class BaseMode {
         x = x + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
         y = y + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
 
-        while (y <= 230 && x >= 500 && x <= 1400 || y < 0) {
+        while (y <= this.Y_BOUND_DOWN && x >= this.X_BOUND_LEFT && this.X_BOUND_RIGHT <= 1400 || y < this.Y_BOUND_UP) {
             y = y + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
         }
 
