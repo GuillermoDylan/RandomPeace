@@ -15,8 +15,7 @@ function preload() {
 
 function setup() {
 
-    createCanvas(windowWidth, windowHeight);
-
+    // Menu principal
     // Define button dimensions and spacing
     buttonWidth = 500;
     buttonHeight = 80;
@@ -90,8 +89,8 @@ function windowResized() {
         let centerX = windowWidth / 2;
         let centerY = windowHeight / 2;
         button1.position(centerX - buttonWidth / 2, centerY - buttonHeight - buttonSpacing);
-        button2.position(centerX - buttonWidth / 2, centerY + buttonSpacing);
-        button3.position(centerX - buttonWidth / 2, centerY + buttonHeight + buttonSpacing * 2);
+        button2.position(centerX - buttonWidth / 2, centerY);
+        button3.position(centerX - buttonWidth / 2, centerY + buttonHeight + buttonSpacing);
     }
 }
 
