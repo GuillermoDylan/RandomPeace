@@ -2,6 +2,8 @@ var rp;
 var imageFactory;
 var userPlaced = true;
 var flowerThrowers;
+var textGenerator;
+var flowers = [];
 
 function preload() {
   imageFactory = new ImageFactory();
@@ -21,6 +23,8 @@ function setup() {
   }
   // TODO habría que cambiarlo, es de prueba
   rp = new RandomPlacer(flowerThrowers[0]);
+  textGenerator = new TextGenerator(50);
+  generateText();
 }
 
 function draw() {
@@ -52,6 +56,19 @@ function draw() {
       // Because the x-axis is reversed, we need to draw at different x position.
       image(flowerThrowers[i], coords[0], coords[1], coords[2], coords[3]);
       pop();
+    }
+    // Colocamos el texto de las flores
+    var x = 500;
+    var y = 1;
+    for(var i = 0; i < soldiers.length; i++){
+      fill(0);
+      textSize(20);
+      text(flowers[i], x,  (y * 25));
+      y++;
+      if(i>0 && i%5 == 0){
+          x += 180;
+          y = 1;
+      }
     }
   }
 }
@@ -86,4 +103,8 @@ function addSoldier(x,y) {
 
   soldiers.push(new Soldier(x, y, "red", soldierWidth, soldierHeight, rotation));
   console.log("new Soldier added");
+}
+
+function generateText(){
+  flowers = textGenerator.getText();
 }
