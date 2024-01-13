@@ -47,7 +47,7 @@ class MultiUser extends BaseMode {
         }
 
         // Luego habría que cambiarlo, es de prueba
-        if (this.soldiers.length >= this.MAX_SOLDIERS) {
+        if (this.soldiers.length >= 5) {
             this.userPlaced = true;
         }
 
@@ -58,7 +58,7 @@ class MultiUser extends BaseMode {
             var tupleArray = []
             for (var i = 0; i < this.soldiers.length; i++) {
                 if (this.soldiers[i].x != undefined)
-                    tupleArray.push([this.soldiers[i].x, this.soldiers[i].y])
+                    tupleArray.push([Math.trunc(this.soldiers[i].x), Math.trunc(this.soldiers[i].y)])
             }
             var json = JSON.stringify({
                 positions: tupleArray

@@ -53,7 +53,6 @@ class ConnectionManager:
         self.active_connections.remove(websocket)
 
     async def disconnectAll(self):
-        users_collection.delete_many({})
         for conn in self.active_connections:
            self.disconnect(conn)
 
@@ -63,6 +62,7 @@ class ConnectionManager:
     async def broadcast(self, message: str):
         for connection in self.active_connections:
             await connection.send_text(message)
+        users_collection.delete_many({})
         
 
 manager = ConnectionManager()
@@ -114,6 +114,7 @@ async def websocket_endpoint(websocket: WebSocket):
                 # Devolvemos las posiciones de todos los usuarios
                 await manager.broadcast(json.dumps(positions))
                 # Desconectamos a todos los usuarios de la sesión
+            if(numberOfUsers == 0):
                 await manager.disconnectAll()
                 
     # En caso de que un usuario se desconecte inesperadamente
