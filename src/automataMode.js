@@ -10,6 +10,7 @@ class AutomataMode extends BaseMode {
 
     setup() {
         super.setup();
+        createCanvas(windowWidth, windowHeight);
         this.MAX_SOLDIERS = new FigureUtil().getMaxSoldiers();
         createCanvas(screen.width, screen.height);
     }
@@ -29,6 +30,8 @@ class AutomataMode extends BaseMode {
         if (isPaused) {
             textSize(50);
             text("Iteración: " + this.iteration, windowWidth - 400, 50);
+            rect(windowWidth - 190, 80, 40, 100);
+            rect(windowWidth - 130, 80, 40, 100);
         }
 
         for (var i = 0; i < this.soldiers.length; i++) {
@@ -49,6 +52,10 @@ class AutomataMode extends BaseMode {
             this.soldiers = this.cellAuto.computeIteration(performance.now(), this.flowerThrowers);
             this.iteration++;
         }
+    }
+
+    windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
     }
 
 }
