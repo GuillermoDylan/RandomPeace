@@ -9,7 +9,7 @@ class WebSocketAdapter {
     }
 
     wasConnectionSuccesfull() {
-        return this.ws != null;
+        return this.ws && this.ws.readyState == this.ws.OPEN;
     }
 
     getSocket() {
