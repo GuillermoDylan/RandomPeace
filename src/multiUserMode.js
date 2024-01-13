@@ -25,8 +25,13 @@ class MultiUser extends BaseMode {
 
     draw() {
         background(255);
+
+        // En caso de que la sesión esté llena o de que el servidor esté inactivo
         if (!this.webSocket.wasConnectionSuccesfull()) {
-            text("La sesión está llena, por favor vuelve a intentarlo más tarde", windowWidth / 2, windowHeight / 2);
+            this.soldiers = [1]; // Para evitar que salga el texto de hacer click
+            textSize(40);
+            text("  No se pudo conectar con el servidor\nPor favor vuelve a intentarlo más tarde",
+                windowWidth / 2 - 400, windowHeight / 2);
             return;
         }
 
@@ -95,7 +100,7 @@ class MultiUser extends BaseMode {
                 this.loadingScreen.draw(imageFactory, this.numberOfUsers);
                 textSize(100);
                 fill(0);
-                text(this.numberOfUsers + "/4", 10, 100);
+                text(this.numberOfUsers + "/4", windowWidth - 200, 80);
                 if (this.alphaV < 255) {
                     this.alphaV = this.alphaV + 1;
                 }
@@ -105,14 +110,14 @@ class MultiUser extends BaseMode {
     }
 
     mouseClicked() {
-        if (this.userPlaced) {
+        if (this.userPlaced || !this.webSocket.wasConnectionSuccesfull()) {
             return;
         }
         this.addSoldier(mouseX, mouseY);
     }
 
     touchStarted() {
-        if (this.userPlaced) {
+        if (this.userPlaced || !this.webSocket.wasConnectionSuccesfull()) {
             return;
         }
         this.addSoldier(mouseX, mouseY);
