@@ -1,9 +1,10 @@
 "use strict";
 var mode = new BaseMode();
-var gameStarted = false;
+var hasStarted = false;
 let buttonWidth, buttonHeight, buttonSpacing;
 let button1, button2, button3;
 var imageFactory;
+var logoPositionX = 200, logoPositionY = 200;
 
 function preload() {
     // Codigo innecesariamente largo para comprobar si el usuario está o no en un movil o tablet...
@@ -56,32 +57,60 @@ function positionButton(button, x, y) {
 
 // Define functions to be called when buttons are clicked
 function button1Clicked() {
-    updateUI();
+    updateUI(true);
 }
 
 function button2Clicked() {
     mode = new MultiUser()
-    updateUI();
+    updateUI(true);
 }
 
 function button3Clicked() {
     mode = new AutomataMode();
-    updateUI();
+    updateUI(true);
 }
 
 function draw() {
-    if (gameStarted) {
+    if (hasStarted) {
         mode.draw();
+        noStroke();
+        fill(0);
+        triangle(20, 50, 60, 80, 60, 20);
+        rect(40, 36.5, 100, 25);
+        if (mode.soldiers.length <= 0) {
+            textSize(40);
+            text("Toca la pantalla para empezar", windowWidth / 2 - 300, windowHeight / 2);
+        }
+        // Si está encima de la flecha, cambiamos el cursor, si no, lo mantenemos
+        if (mouseX >= 0 && mouseX <= 100 && mouseY >= 0 && mouseY <= 80) {
+            cursor("pointer");
+        } else {
+            cursor(ARROW);
+        }
+    } else {
+        // Dibujamos el logo
+        createCanvas(windowWidth, windowHeight);
+        textSize(100);
+        textFont("Arial Black");
+        fill(0);
+        text("Random Peace", windowWidth / 2 - 375, windowHeight / 2 - 300);
+        image(imageFactory.getFlowerThrowerBase(), windowWidth / 2 + logoPositionX, windowHeight / 2 - logoPositionY);
+        cursor(ARROW); // Por si el cursor fue cambiado anteriormente
     }
+
 }
 
 function mouseClicked() {
-    if (gameStarted)
+    if (hasStarted && mouseX >= 0 && mouseX <= 100 && mouseY >= 0 && mouseY <= 80) {
+        mode = new BaseMode();
+        updateUI(false);
+    }
+    if (hasStarted)
         mode.mouseClicked();
 }
 
 function windowResized() {
-    if (gameStarted) {
+    if (hasStarted) {
         mode.windowResized();
     } else {
         resizeCanvas(windowWidth, windowHeight);
@@ -96,18 +125,24 @@ function windowResized() {
 
 // Esto está solo para probar si funcionaría en móvil
 function touchEnded() {
-    if (gameStarted && mobileAndTabletCheck())
+    if (hasStarted && mobileAndTabletCheck())
         mode.touchStarted();
 }
 
 // Actualizamos la interfaz quitando los botones y inicializando el modo
-function updateUI() {
-    button1.remove();
-    button2.remove();
-    button3.remove();
+function updateUI(start) {
+    if (start) {
+        button1.remove();
+        button2.remove();
+        button3.remove();
 
-    mode.preload();
-    mode.setup();
+        mode.setup();
+    } else {
+        setup();
 
-    gameStarted = true;
+        // Pequeño "easter egg" ;)
+        logoPositionX = Math.random() * (2000) - 1000;
+        logoPositionY = Math.random() * (1000) - 500;
+    }
+    hasStarted = start;
 }

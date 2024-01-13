@@ -1,8 +1,10 @@
 /* CSS */
 .button-58 {
     align-items: center;
-    background-color: #06f;
-    border: 2px solid #06f;
+    /*background-color: #06f;*/
+    background-color: black;
+    /*border: 2px solid #06f;*/
+    border: 2px solid black;
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;

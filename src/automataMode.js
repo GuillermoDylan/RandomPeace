@@ -1,26 +1,35 @@
-var j = 0;
+var isPaused = false;
 class AutomataMode extends BaseMode {
 
     constructor() {
         super();
         this.array;
-        this.flowerThrowers;
         this.cellAuto;
         this.iteration = 0;
     }
 
-    preload() {
-    }
-
     setup() {
         super.setup();
+        this.MAX_SOLDIERS = new FigureUtil().getMaxSoldiers();
         createCanvas(screen.width, screen.height);
     }
 
-    async draw() {
+    draw() {
         background(255);
 
         imageMode(CENTER);
+
+        if (this.soldiers.length == 0) {
+            //Texto descriptivo
+            textSize(25);
+            text("Pulsa cualquier tecla para pausar", windowWidth / 2 - 200, windowHeight / 2 + 50)
+        }
+
+        // Controlador de pausa y iteriaciones del automata
+        if (isPaused) {
+            textSize(50);
+            text("Iteración: " + this.iteration, windowWidth - 400, 50);
+        }
 
         for (var i = 0; i < this.soldiers.length; i++) {
             if (this.soldiers[i] != null || this.soldiers[i] != undefined) {
@@ -33,7 +42,7 @@ class AutomataMode extends BaseMode {
         }
 
         // Automata celular
-        if (this.userPlaced) {
+        if (this.userPlaced && !isPaused) {
             if (this.cellAuto === undefined || this.cellAuto === null) {
                 this.cellAuto = new CellAuto(this.soldiers);
             }
@@ -42,4 +51,8 @@ class AutomataMode extends BaseMode {
         }
     }
 
+}
+
+function keyPressed() {
+    isPaused = !isPaused;
 }

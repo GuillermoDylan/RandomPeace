@@ -1,11 +1,7 @@
-"use strict";
-var num = 0;
-class MultiUser {
+class MultiUser extends BaseMode {
 
     constructor() {
-        this.rp;
-        this.userPlaced = false;
-        this.flowerThrowers;
+        super();
         this.webSocket;
         this.sentJSON = false;
         this.usersPositions = [];
@@ -14,14 +10,12 @@ class MultiUser {
         this.alphaV = 0;
     }
 
-    preload() {
-        this.loadingScreen = new LoadingScreen();
-    }
-
     setup() {
         createCanvas(screen.width, screen.height);
-        this.soldiers = [50];
-        this.flowerThrowers = [50];
+        this.MAX_SOLDIERS = new FigureUtil().getMaxSoldiersForMultiuser();
+        this.loadingScreen = new LoadingScreen();
+        this.soldiers = [];
+        this.flowerThrowers = [];
         for (var i = 0; i < 50; i++) {
             this.flowerThrowers[i] = imageFactory.getFlowerThrower();
         }
@@ -42,19 +36,18 @@ class MultiUser {
             // data contiene los arrays de cada jugador, solo tenemos que mostrarlos en pantalla
             if (typeof (data) === "number") {
                 this.numberOfUsers = data
-                num = data;
             } else {
                 this.usersPositions = data
                 this.numberOfUsers = data.length
-            };;
+            };
         };
 
         for (var i = 0; i < this.soldiers.length; i++) {
-            image(this.flowerThrowers[i], this.soldiers[i].x, this.soldiers[i].y, 60, 70);
+            image(this.flowerThrowers[i], this.soldiers[i].x, this.soldiers[i].y, this.soldiers[i].width, this.soldiers[i].height);
         }
 
-        // TODO Luego habría que cambiarlo, es de prueba
-        if (this.soldiers.length >= 5) {
+        // Luego habría que cambiarlo, es de prueba
+        if (this.soldiers.length >= this.MAX_SOLDIERS) {
             this.userPlaced = true;
         }
 
@@ -63,13 +56,10 @@ class MultiUser {
             // Creamos el json con las posiciones del usuario
             // CUIDADO: este solo se envía una sola vez
             var tupleArray = []
-            //json = "{\n\"positions\":[\n"
             for (var i = 0; i < this.soldiers.length; i++) {
                 if (this.soldiers[i].x != undefined)
-                    //json += "[" + soldiers[i].x + "," + soldiers[i].y + "],\n"
                     tupleArray.push([this.soldiers[i].x, this.soldiers[i].y])
             }
-            //json += "\n]\n}"
             var json = JSON.stringify({
                 positions: tupleArray
             })
@@ -129,7 +119,12 @@ class MultiUser {
     }
 
     addSoldier(x, y) {
-        this.soldiers.push(new Soldier(x, y, "red"));
+        var positioner = new FigureUtil();
+
+        // Ese true del final indica que puede colocar las figuras encima de donde estaría
+        // el texto del modo "base"
+        this.soldiers.push(positioner.createNewFigure(x, y, this.flowerThrowers, true));
+        console.log("new Soldier added");
     }
 
 }

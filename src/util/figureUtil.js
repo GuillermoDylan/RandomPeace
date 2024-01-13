@@ -11,17 +11,31 @@ class FigureUtil {
         this.SOLDIER_RANDOM_RANGE = 150;
     }
 
+    getMaxSoldiers(max) {
+        // max || 25 siginifica que 
+        // si no se le pasa el parámetro max, se le asigna 25 por "defecto"
+        var MAX_SOLDIERS = map(windowWidth, 300, 1920, 5, max || 25);
+        MAX_SOLDIERS = int(MAX_SOLDIERS / 5) * 5;
+        return MAX_SOLDIERS;
+    }
+
+    getMaxSoldiersForMultiuser() {
+        return this.getMaxSoldiers(15);
+    }
+
     /**
      * Genera una figura nueva con poisicones aleatorias relativas a las originales
      */
-    createNewFigure(x, y, flowerThrowers) {
+    createNewFigure(x, y, flowerThrowers, multiUserEnabled) {
         var height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
         x = x + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
         y = y + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
 
-        while (y <= this.Y_BOUND_DOWN && x >= this.X_BOUND_LEFT && this.X_BOUND_RIGHT <= 1400 || y < this.Y_BOUND_UP) {
-            y = y + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
+        if (!multiUserEnabled) {
+            while (y <= this.Y_BOUND_DOWN && x >= this.X_BOUND_LEFT && this.X_BOUND_RIGHT <= 1400 || y < this.Y_BOUND_UP) {
+                y = y + random(-this.SOLDIER_RANDOM_RANGE, this.SOLDIER_RANDOM_RANGE);
+            }
         }
 
         // si el soldado aparece arriba del todo se pintara con 0.8 veces su tamaño 0.04

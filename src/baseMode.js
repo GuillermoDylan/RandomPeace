@@ -8,14 +8,11 @@ class BaseMode {
         this.textGenerator;
     }
 
-    preload() {
-    }
 
     setup() {
         createCanvas(windowWidth, windowHeight);
         // ajusta automáticamente el número de soldados a colocar en función del ancho de la pantalla
-        this.MAX_SOLDIERS = map(windowWidth, 300, 1920, 5, 25);
-        this.MAX_SOLDIERS = int(this.MAX_SOLDIERS / 5) * 5;
+        this.MAX_SOLDIERS = new FigureUtil().getMaxSoldiers();
 
         this.SOLDIER_RANDOM_RANGE = 150;
         this.soldiers = []; // Aquí no hace falta establecer el tamaño por ser unidimensionales, además
