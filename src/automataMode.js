@@ -6,13 +6,21 @@ class AutomataMode extends BaseMode {
         this.array;
         this.cellAuto;
         this.iteration = 0;
+        this.iterationModifier = 0;
     }
 
     setup() {
-        super.setup();
         createCanvas(windowWidth, windowHeight);
+        // ajusta automáticamente el número de soldados a colocar en función del ancho de la pantalla
         this.MAX_SOLDIERS = new FigureUtil().getMaxSoldiers();
-        createCanvas(screen.width, screen.height);
+
+        this.SOLDIER_RANDOM_RANGE = 150;
+        this.soldiers = []; // Aquí no hace falta establecer el tamaño por ser unidimensionales, además
+        // si lo añadiesemos se nos añadiría dentro un "soldado" nuevo automáticamente
+        this.flowerThrowers = [];
+        for (var i = 0; i < 50; i++) {
+            this.flowerThrowers[i] = imageFactory.getFlowerThrower();
+        }
     }
 
     draw() {
@@ -29,9 +37,12 @@ class AutomataMode extends BaseMode {
         // Controlador de pausa y iteriaciones del automata
         if (isPaused) {
             textSize(50);
-            text("Iteración: " + this.iteration, windowWidth - 400, 50);
-            rect(windowWidth - 190, 80, 40, 100);
-            rect(windowWidth - 130, 80, 40, 100);
+            if(this.iteration >= (this.iterationModifier + 1) * 1000) {
+                this.iterationModifier = this.iteration / 100 + 100;
+            }
+            text("Iteración: " + this.iteration, windowWidth - 400 - (this.iterationModifier), 100);
+            rect(windowWidth - 190, 120, 40, 110);
+            rect(windowWidth - 130, 120, 40, 110);
         }
 
         for (var i = 0; i < this.soldiers.length; i++) {
@@ -56,6 +67,24 @@ class AutomataMode extends BaseMode {
 
     windowResized() {
         resizeCanvas(windowWidth, windowHeight);
+    }
+
+    displayInfo(){
+        var modal = document.getElementById("modalAutomata");
+        var span = document.getElementsByClassName("close")[2];
+        
+        modal.style.display = "block";
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+          
+          // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
     }
 
 }

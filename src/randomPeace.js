@@ -2,8 +2,8 @@
 var mode = new BaseMode();
 var hasStarted = false;
 let buttonWidth, buttonHeight, buttonSpacing;
-let button1, button2, button3;
-var imageFactory;
+let button1, button2, button3, buttonInfo;
+var imageFactory, imageFlowerThrowerMenu;
 var logoPositionX = 200, logoPositionY = 200;
 
 function preload() {
@@ -17,6 +17,8 @@ function preload() {
 }
 
 function setup() {
+    
+    imageFlowerThrowerMenu = imageFactory.getFlowerThrower();
 
     // Menu principal
     // Define button dimensions and spacing
@@ -43,11 +45,10 @@ function setup() {
     applyStyles(button3);
     positionButton(button3, centerX - buttonWidth / 2, centerY + buttonHeight + buttonSpacing);
     button3.mousePressed(button3Clicked);
-
 }
 
 function applyStyles(button) {
-    button.class('button-58');
+    button.class('button-menu');
 }
 
 function positionButton(button, x, y) {
@@ -55,7 +56,6 @@ function positionButton(button, x, y) {
     button.size(buttonWidth, buttonHeight);
 }
 
-// Define functions to be called when buttons are clicked
 function button1Clicked() {
     updateUI(true);
 }
@@ -87,6 +87,7 @@ function draw() {
         } else {
             cursor(ARROW);
         }
+        
     } else {
         // Dibujamos el logo
         createCanvas(windowWidth, windowHeight);
@@ -94,7 +95,7 @@ function draw() {
         textFont("Arial Black");
         fill(0);
         text("Random Peace", windowWidth / 2 - 375, windowHeight / 2 - 300);
-        image(imageFactory.getFlowerThrowerBase(), windowWidth / 2 + logoPositionX, windowHeight / 2 - logoPositionY);
+        image(imageFlowerThrowerMenu, windowWidth / 2 + logoPositionX, windowHeight / 2 - logoPositionY);
         cursor(ARROW); // Por si el cursor fue cambiado anteriormente
     }
 
@@ -135,14 +136,27 @@ function updateUI(start) {
         button1.remove();
         button2.remove();
         button3.remove();
-
+        
         mode.setup();
+
+        buttonInfo = createButton("i");
+        buttonInfo.class("button-info");
+        buttonInfo.position(windowWidth - 70, 20);
+        buttonInfo.size(10,10);
+        buttonInfo.mousePressed(() => {
+            mode.displayInfo();
+        });
     } else {
         setup();
-
         // Pequeño "easter egg" ;)
+        imageFlowerThrowerMenu = imageFactory.getFlowerThrower();
         logoPositionX = Math.random() * (2000) - 1000;
         logoPositionY = Math.random() * (1000) - 500;
+
+        if(buttonInfo != undefined){
+            buttonInfo.remove();
+        }
+
     }
     hasStarted = start;
 }
