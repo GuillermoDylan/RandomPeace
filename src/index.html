@@ -6,35 +6,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Sketch</title>
+  <meta name="description" content="Random Peace" />
+  <meta name="author" content="Guillermo Dylan & Santiago Fernandez" />
 
-  <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="icon" type="image/svg+xml" href="./img/favicon.svg">
   <link rel="icon" type="image/png" href="./img/favicon.png">
   <link rel="stylesheet" href="./css/style.css">
 
   <script src="libraries/p5.min.js"></script>
-  <script src="libraries/p5.sound.min.js"></script>
   <script src="libraries/quicksettings.js"></script>
   <script src="libraries/p5.gui.js"></script>
 
   <!-- Cuidado con el orden de los imports! :) -->
-  <script src="random_placer.js"></script>
+  <script src="./util/random_placer.js"></script>
   <script src="./util/figureUtil.js"></script>
   <script src="./util/image_factory.js"></script>
   <script src="soldier.js"></script>
-  <script src="websocket.js"></script>
-  <script src="loadingScreen.js"></script>
+  <script src="./multiuser/websocket.js"></script>
+  <script src="./util/loadingScreen.js"></script>
   <script src="./util/text_generator.js"></script>
   <script src="./util/file_reader.js"></script>
   <!-- Aqui definimos el modo base, el resto de modos deben ir a partir de él-->
   <script src="baseMode.js"></script>
-  <script src="multiUserMode.js"></script>
-  <script src="cellAuto.js"></script>
-  <script src="automataMode.js"></script>
+  <script src="./multiuser/multiUserMode.js"></script>
+  <script src="./automata/cellAuto.js"></script>
+  <script src="./automata/automataMode.js"></script>
   <script src="randomPeace.js"></script>
 </head>
 
 <body>
+<div id="modalBaseMode" class="modal" display="none">
+  <!-- Modal content -->
+    <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Haz click en la pantalla para colocar las figuras, una vez hayas colocado todas el ordenador colocará las suyas.</p>
+  </div>
+</div>
+
+<div id="modalMultiUser" class="modal" display="none">
+  <!-- Modal content -->
+    <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Haz click en la pantalla para colocar las figuras, cuando el resto de usuarios coloquen las suyas podrás verlas todas.</p>
+  </div>
+</div>
+
+<div id="modalAutomata" class="modal" display="none">
+  <!-- Modal content -->
+    <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Un automata celular es un modelo matemático que evoluciona con el tiempo a través de varias iteraciones.</p>
+    <p>En este caso, el automata está compuesto de diferentes figuras que se muestran en tu pantalla, una vez hayas puesto todas haciendo click podrás ver como evoluciona el automata.</p>
+    <p>Si quieres pausar la evolución en algún momento, presiona cualquier tecla.</p>
+  </div>
+</div>
+
 </body>
 
 </html>

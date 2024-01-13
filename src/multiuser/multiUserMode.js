@@ -11,7 +11,7 @@ class MultiUser extends BaseMode {
     }
 
     setup() {
-        createCanvas(screen.width, screen.height);
+        createCanvas(windowWidth, windowHeight);
         this.MAX_SOLDIERS = new FigureUtil().getMaxSoldiersForMultiuser();
         this.loadingScreen = new LoadingScreen();
         this.soldiers = [];
@@ -82,7 +82,8 @@ class MultiUser extends BaseMode {
                 // Segundo nivel: figuras del usuario
                 for (var j = 0; j < this.usersPositions[i].length; j++) {
                     // Tercer nivel: posición x e y de cada figura
-                    image(this.flowerThrowers[i], this.usersPositions[i][j][0], this.usersPositions[i][j][1], 60, 70);
+                    var figure = new FigureUtil().reescalar(this.usersPositions[i][j][0], this.usersPositions[i][j][1], this.flowerThrowers)
+                    image(this.flowerThrowers[i], figure.x, figure.y, figure.width, figure.height);
                 }
             }
         }
@@ -100,7 +101,7 @@ class MultiUser extends BaseMode {
                 this.loadingScreen.draw(imageFactory, this.numberOfUsers);
                 textSize(100);
                 fill(0);
-                text(this.numberOfUsers + "/4", windowWidth - 200, 80);
+                text(this.numberOfUsers + "/4", windowWidth - 250, 80);
                 if (this.alphaV < 255) {
                     this.alphaV = this.alphaV + 1;
                 }
@@ -130,6 +131,25 @@ class MultiUser extends BaseMode {
         // el texto del modo "base"
         this.soldiers.push(positioner.createNewFigure(x, y, this.flowerThrowers, true));
         console.log("new Soldier added");
+    }
+
+    displayInfo(){
+        var modal = document.getElementById("modalMultiUser");
+        var span = document.getElementsByClassName("close")[1];
+        
+        modal.style.display = "block";
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+          
+          // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
     }
 
 }

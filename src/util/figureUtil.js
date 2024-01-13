@@ -25,6 +25,10 @@ class FigureUtil {
 
     /**
      * Genera una figura nueva con poisicones aleatorias relativas a las originales
+     * @param {Number} x posicion x original
+     * @param {Number} y posicion y original
+     * @param {Array} flowerThrowers array de imagenes para escalar el tamaño
+     * @param {Boolean} multiUserEnabled si es modo multiusuario o no
      */
     createNewFigure(x, y, flowerThrowers, multiUserEnabled) {
         var height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
