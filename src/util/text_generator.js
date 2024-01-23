@@ -34,6 +34,7 @@ class TextGenerator {
         var y = 1;
         for (var i = 0; i < soldiers.length; i++) {
             fill(0);
+            textFont("Arial");
             textSize(20);
             text(this.flowers[i], x, (y * 25));
             y++;
