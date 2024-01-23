@@ -11,7 +11,7 @@ class CellAuto {
    */
   computeIteration(endTime, flowerThrowers) {
     // Tiempo entre iteraciones: 0.09 segundos
-    if ((endTime - this.startTime) < 90) {
+    if ((endTime - this.startTime) < 500) {
       return this.array;
     }
     this.startTime = performance.now();
@@ -54,10 +54,10 @@ class CellAuto {
         let randomY = Math.floor(Math.random() * 201) - 100 + currentFigure.y;
 
         // Check if the new coordinates are within the screen
-        while (randomX > screen.width) {
+        while (randomX > screen.width - 50 || randomX < 50) {
           randomX = Math.floor(Math.random() * 100) - 50 + currentFigure.x;
         }
-        while (randomY > screen.height) {
+        while (randomY > screen.height - 250 || randomY < 50) {
           randomY = Math.floor(Math.random() * 100) - 50 + currentFigure.y;
         }
 
