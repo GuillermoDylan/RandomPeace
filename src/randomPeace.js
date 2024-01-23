@@ -17,6 +17,8 @@ function preload() {
 }
 
 function setup() {
+    // Create canvas
+    createCanvas(windowWidth, windowHeight);
     
     imageFlowerThrowerMenu = imageFactory.getFlowerThrower();
 
@@ -89,8 +91,7 @@ function draw() {
         }
         
     } else {
-        // Dibujamos el logo
-        createCanvas(windowWidth, windowHeight);
+        // Dibujamos el logo        
         textSize(100);
         textFont("Arial Black");
         fill(0);
